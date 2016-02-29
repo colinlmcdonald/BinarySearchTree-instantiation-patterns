@@ -1,0 +1,70 @@
+var BinarySearchTree = function(value){
+
+  var binaryTree = {};
+  _(binaryTree).extend(binaryTreeMethods);
+
+  binaryTree.value = value;
+  binaryTree.left = null;
+  binaryTree.right = null;
+
+  return binaryTree;
+  };
+
+  var binaryTreeMethods = {};
+
+
+binaryTreeMethods.insert = function(val){
+  if ( val < this.value ) {
+    if ( this.left === null ) {
+      this.left = BinarySearchTree(val);
+    } else {
+      this.left.insert(val);
+    }
+  } else if ( val > this.value) {
+    if ( this.right === null ) {
+      this.right = BinarySearchTree(val);
+    } else {
+      this.right.insert(val);
+    }
+  } else {
+    return "The tree already contains this value.";
+  }
+};
+
+binaryTreeMethods.contains = function(val){
+  if ( val === this.value ){
+    return true;
+  } else if( val < this.value ){
+    if ( !this.left ){
+      return false;
+    } else {
+      return this.left.contains(val);
+    }
+  } else if( val > this.value ){
+    if( !this.right ){
+      return false;
+    } else {
+      return this.right.contains(val);
+    }
+  }
+};
+
+binaryTreeMethods.depthFirstLog = function(callBack){
+  callBack(this.value);
+  if ( this.left ){
+    this.left.depthFirstLog(callBack);
+  }
+  if ( this.right ){
+    this.right.depthFirstLog(callBack);
+  }
+};
+
+var tree = BinarySearchTree(4);
+var make = [1,2,3,4,5,6,7,8];
+for (var i = 0; i < make.length; i++) {
+  tree.insert(make[i]);
+};
+console.log(tree);
+/*
+ * Complexity: What is the time complexity of the above functions?
+ */

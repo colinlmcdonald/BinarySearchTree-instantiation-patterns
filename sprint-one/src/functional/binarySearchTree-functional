@@ -1,0 +1,61 @@
+var BinarySearchTree = function(value){
+
+  var binaryTree = {};
+  binaryTree.value = value;
+  binaryTree.left = null;
+  binaryTree.right = null;
+  
+  binaryTree.insert = function(val){
+    if ( val < this.value ) {
+      if ( this.left === null ) {
+        this.left = BinarySearchTree(val);
+      } else {
+        this.left.insert(val);
+      }
+    } else if ( val > this.value) {
+      if ( this.right === null ) {
+        this.right = BinarySearchTree(val);
+      } else {
+        this.right.insert(val);
+      }
+    } else {
+      return "The tree already contains this value.";
+    }
+  };
+
+  binaryTree.contains = function(val){
+    if ( val === this.value ){
+      return true;
+    } else if( val < this.value ){
+      if ( !this.left ){
+        return false;
+      } else {
+        return this.left.contains(val);
+      }
+    } else if( val > this.value ){
+      if( !this.right ){
+        return false;
+      } else {
+        return this.right.contains(val);
+      }
+    }
+  };
+
+  binaryTree.depthFirstLog = function(callBack){
+    callBack(this.value);
+    if ( this.left ){
+      this.left.depthFirstLog(callBack);
+    }
+    if ( this.right ){
+      this.right.depthFirstLog(callBack);
+    }
+  };
+  return binaryTree;
+};
+
+var tree = BinarySearchTree(4);
+var make = [1,2,3,4,5,6,7,8];
+for (var i = 0; i < make.length; i++) {
+  tree.insert(make[i]);
+};
+console.log(tree);
